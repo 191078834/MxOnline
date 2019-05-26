@@ -18,7 +18,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 sys.path.insert(0, os.path.join(BASE_DIR, 'extra_apps'))
-print(os.path.join(BASE_DIR, 'templates'))
+# print(os.path.join(BASE_DIR, 'templates'))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'operation',
     'organization',
     'xadmin',
-    'crispy_forms'
+    'crispy_forms',
+    'captcha'
 ]
 AUTH_USER_MODEL = 'users.UserProfile'
 
@@ -84,6 +85,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'MxOnline.wsgi.application'
 
+EMAIL_HOST = "smtp.qq.com"  # SMTP服务器主机
+EMAIL_PORT = 25             # 端口
+EMAIL_HOST_USER = "191078834@qq.com"       # 邮箱地址
+EMAIL_HOST_PASSWORD = "yvrfmindjnmxbijh"    # 密码
+EMAIL_USE_TLS= True
+EMAIL_FROM = "191078834@qq.com"            # 邮箱地址
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
