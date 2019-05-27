@@ -5,7 +5,7 @@ from .models import UserProfile, EmailVerifyRecord
 from django.db.models import Q
 from django.views.generic.base import View
 from .forms import LoginForm, RegisterForm, ForgetPsdForm
-from django.contrib.auth.hashers import make_password
+from django.contrib.auth.hashers import make_password, check_password
 from utils. email_send import send_register_email
 # Create your views here.
 
@@ -35,8 +35,11 @@ class LoginView(View):
             user_name = requset.POST.get('username', None)
             pass_word = requset.POST.get('password', None)
             # 成功返回user对象 失败返回None
-            user = authenticate(user_name=user_name, password=pass_word)
+            # pass_word = make_password(pass_word)
+            cb = CustomBackend()
+            user = cb.authenticate(requset, username=user_name, password=pass_word)
             if user is not None:
+                print(11111)
                 if user.is_active:
                     login(requset, user)
                     return render(requset, 'index.html')
@@ -48,8 +51,9 @@ class LoginView(View):
 
 
 class ActiveUserView(View):
-    def get(self, request, acvite_code):
-        all_records = EmailVerifyRecord.objects.filter(code=acvite_code)
+    def get(self, request, active_code):
+        print(active_code)
+        all_records = EmailVerifyRecord.objects.filter(code=active_code)
         if all_records:
             for record in all_records:
                 email = record.email
@@ -94,7 +98,7 @@ class ForgertPwdVied(View):
             send_register_email(email, send_type='forget')
             return render(request, 'send_success.html')
         else:
-            return render(request, 'forgetpwd.htnl', {'forget_form':forget_form})
+            return render(request, 'forgetpwd.html', {'forget_form':forget_form})
 
 class ResetView(View):
     def get(self, request, actice_code):

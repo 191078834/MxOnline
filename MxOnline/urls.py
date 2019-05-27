@@ -26,6 +26,6 @@ urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
     path('captcha/', include('captcha.urls')),
     re_path('active/(?P<active_code>.*)/', ActiveUserView.as_view(), name='user_active'),
-    path('forget/', ForgertPwdVied.as_view(), name='forget_pwd')
+    path('forget/', ForgertPwdVied.as_view(), name='forget_pwd'),
     re_path('reset/(?P<active_code>.*)/', ResetView.as_view, name='reset_pwd')
 ]
