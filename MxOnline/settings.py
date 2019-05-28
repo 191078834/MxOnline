@@ -61,7 +61,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'MxOnline.urls'
-
+#
 AUTHENTICATION_BACKENDS = (
     'users.views.CustomBackend',
 )
@@ -91,6 +91,9 @@ EMAIL_HOST_USER = "191078834@qq.com"       # 邮箱地址
 EMAIL_HOST_PASSWORD = "yvrfmindjnmxbijh"    # 密码
 EMAIL_USE_TLS= True
 EMAIL_FROM = "191078834@qq.com"            # 邮箱地址
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases

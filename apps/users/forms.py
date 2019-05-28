@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# -*- coding: utf-8 -*- 
+# -*- coding: utf-8 -*-
 #Auther: WQM
 #Time: 2019/5/24 17:23
 from django import forms

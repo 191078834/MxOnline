@@ -12,14 +12,21 @@ class CityDict(models.Model):
         verbose_name_plural= verbose_name
 
 class CourseOrg(models.Model):
+    ORG_CHOICES=(
+        ('pxjg','培训机构'),
+        ('gx',u'高校'),
+        ('geren',u'个人'),
+    )
+
     name = models.CharField('机构名称',max_length=50)
     desc = models.TextField('机构描述')
     click_nums = models.IntegerField('点击数',default=0)
     fav_nums = models.IntegerField('收藏数',default=0)
-    image = models.ImageField('封面图',upload_to='org/%Y%m',max_length=100)
+    image = models.ImageField('封面图',upload_to='org/%Y/%m',max_length=100)
     address = models.CharField('机构地址',max_length=150,)
     city = models.ForeignKey(CityDict,verbose_name='所在城市',on_delete=models.CASCADE)
     add_time = models.DateTimeField(default=datetime.now)
+    category = models.CharField(max_length=20, verbose_name='机构类别', default='pxjg', choices=ORG_CHOICES)
 
     class Meta:
         verbose_name = '课程机构'

@@ -4,7 +4,7 @@ from django.contrib.auth.backends import ModelBackend
 from .models import UserProfile, EmailVerifyRecord
 from django.db.models import Q
 from django.views.generic.base import View
-from .forms import LoginForm, RegisterForm, ForgetPsdForm
+from .forms import LoginForm, RegisterForm, ForgetPsdForm, ModifyPwdFrom
 from django.contrib.auth.hashers import make_password, check_password
 from utils. email_send import send_register_email
 # Create your views here.
@@ -92,7 +92,7 @@ class ForgertPwdVied(View):
         forget_form = ForgetPsdForm()
         return render(request, 'forgetpwd.html', {'fogget_form':forget_form})
     def post(self, request):
-        forget_form = ForgetPsdForm()
+        forget_form = ForgetPsdForm(request.POST)
         if forget_form.is_valid():
             email = request.POST.get('email', None)
             send_register_email(email, send_type='forget')
@@ -101,8 +101,9 @@ class ForgertPwdVied(View):
             return render(request, 'forgetpwd.html', {'forget_form':forget_form})
 
 class ResetView(View):
-    def get(self, request, actice_code):
-        all_records = EmailVerifyRecord.objects.filter(code=actice_code)
+    def get(self, request, active_code):
+        print(active_code)
+        all_records = EmailVerifyRecord.objects.filter(code=active_code)
         if all_records:
             for record in all_records:
                 email = record.email
@@ -110,3 +111,20 @@ class ResetView(View):
         else:
             return render(request, 'active_fail.html')
         return render(request, 'login.html')
+
+class ModifyPwdView(View):
+    def post(self, request):
+        modify_form = ModifyPwdFrom(request.POST)
+        if modify_form.is_valid():
+            pwd1 = request.POST.get("password1", "")
+            pwd2 = request.POST.get("password2", "")
+            email = request.POST.get("email", "")
+            if pwd1!=pwd2:
+                return render(request, 'password_reset.html', {'email':email, 'msg':'密码不一致'})
+            user = UserProfile.objects.filter(email=email)
+            user.password = make_password(pwd1)
+            user.update()
+            return render(request, 'login.html')
+        else:
+            email = request.POST.get('email', '')
+            return render(request, 'password_reset.html', {'email':email, 'modify_form':modify_form})
