@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'organization',
     'xadmin',
     'crispy_forms',
-    'captcha'
+    'captcha',
+    'pure_pagination',
 ]
 AUTH_USER_MODEL = 'users.UserProfile'
 
@@ -78,6 +79,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # 要想使用{{MEDIA_URL}} 需要添加图片处理器相应的url路径
+                'django.template.context_processors.media'
             ],
         },
     },
@@ -93,7 +96,9 @@ EMAIL_USE_TLS= True
 EMAIL_FROM = "191078834@qq.com"            # 邮箱地址
 
 MEDIA_URL = '/media/'
+# MEDIA_URL = os.path.join(BASE_DIR, 'media')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# print(MEDIA_ROOT)
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases

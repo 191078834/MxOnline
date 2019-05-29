@@ -17,7 +17,7 @@ class UserProfile(AbstractUser):
     gender = models.CharField('性别', choices=gender_choices, default='male', max_length=10)
     address = models.CharField('地址', null=True, blank=True, max_length=100)
     mobile = models.CharField('手机号', max_length=11, null=True,blank=True)
-    image = models.ImageField('image/%Y%m', default='image/default.png', max_length=200)
+    image = models.ImageField('用户贴图',upload_to='image/%Y/%m', default='image/default.jpg', max_length=200)
 
     class Meta:
         # 指定在admin管理界面中显示中文
