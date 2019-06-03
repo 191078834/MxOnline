@@ -35,6 +35,6 @@ urlpatterns = [
     path('modify_pwd/', ModifyPwdView.as_view(), name='modify_pwd'),
     re_path(r'^media/(?P<path>.*)', serve, {'document_root':MEDIA_ROOT}),
     # orgi
-    path('org_list/', OrgView.as_view(), name='org_list')
-
+    # path('org_list/', OrgView.as_view(), name='org_list')
+    path('org/', include('organization.urls', namespace="org"))
 ]
