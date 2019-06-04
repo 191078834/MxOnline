@@ -16,7 +16,6 @@ class UserAsk(models.Model):
     def __str__(self):
         return self.name
 
-
 class UserMessage(models.Model):
     user = models.IntegerField('接受用户',default=0)
     message = models.CharField('消息内容',max_length=500)
@@ -26,7 +25,6 @@ class UserMessage(models.Model):
     class Meta:
         verbose_name = '用户消息'
         verbose_name_plural = verbose_name
-
 
 class CourseComments(models.Model):
     user = models.ForeignKey(UserProfile,verbose_name='用户',on_delete=models.CASCADE)

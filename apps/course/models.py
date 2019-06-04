@@ -1,6 +1,8 @@
 from django.db import models
 from datetime import datetime
 # Create your models here.
+from organization.models import CourseOrg
+
 class Course(models.Model):
 
     DEGREE_CHOICES = (
@@ -18,6 +20,8 @@ class Course(models.Model):
     image = models.ImageField('封面图', upload_to='source/%Y%m', max_length=100)
     click_nums = models.IntegerField("点击数", default=0)
     add_time = models.DateTimeField("添加时间", default=datetime.now, )
+    course_org = models.ForeignKey(CourseOrg, on_delete=models.CASCADE,
+                                   verbose_name='所属机构', null=True, blank=True)
 
     class Meta:
         verbose_name = '课程'
