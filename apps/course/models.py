@@ -22,10 +22,18 @@ class Course(models.Model):
     add_time = models.DateTimeField("添加时间", default=datetime.now, )
     course_org = models.ForeignKey(CourseOrg, on_delete=models.CASCADE,
                                    verbose_name='所属机构', null=True, blank=True)
+    category = models.CharField("课程类别", max_length=100, default="")
 
     class Meta:
         verbose_name = '课程'
         verbose_name_plural = verbose_name
+
+    def get_zj_nums(self):
+        return self.lesson_set.all().count()
+
+    def get_learn_uesrs(self):
+        # 获取这门课程的学习用户
+        return self.usercourse_set.all()[:5]
 
     def __str__(self):
         return self.name

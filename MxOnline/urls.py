@@ -36,5 +36,6 @@ urlpatterns = [
     re_path(r'^media/(?P<path>.*)', serve, {'document_root':MEDIA_ROOT}),
     # orgi
     # path('org_list/', OrgView.as_view(), name='org_list')
-    path('org/', include('organization.urls', namespace="org"))
+    path('org/', include('organization.urls', namespace="org")),
+    path("course/", include('course.urls', namespace="course")),
 ]
