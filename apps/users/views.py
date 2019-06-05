@@ -7,6 +7,8 @@ from django.views.generic.base import View
 from .forms import LoginForm, RegisterForm, ForgetPsdForm, ModifyPwdFrom
 from django.contrib.auth.hashers import make_password, check_password
 from utils. email_send import send_register_email
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 
 #邮箱和用户名都可以登录
@@ -128,3 +130,8 @@ class ModifyPwdView(View):
         else:
             email = request.POST.get('email', '')
             return render(request, 'password_reset.html', {'email':email, 'modify_form':modify_form})
+
+class UserinfoView(LoginRequiredMixin,View):
+    '''用户个人信息'''
+    def get(self,request):
+        return render(request,'usercenter-info.html',{})

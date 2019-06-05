@@ -1,7 +1,8 @@
 from django.db import models
 from datetime import datetime
 # Create your models here.
-from organization.models import CourseOrg
+from organization.models import CourseOrg, Teacher
+
 
 class Course(models.Model):
 
@@ -20,6 +21,10 @@ class Course(models.Model):
     image = models.ImageField('封面图', upload_to='source/%Y%m', max_length=100)
     click_nums = models.IntegerField("点击数", default=0)
     add_time = models.DateTimeField("添加时间", default=datetime.now, )
+    tag = models.CharField('课程标签', default='', max_length=10)
+    teacher = models.ForeignKey(Teacher, verbose_name='讲师', null=True, blank=True, on_delete=models.CASCADE)
+    youneed_know = models.CharField('课程须知', max_length=300, default='')
+    teacher_tell = models.CharField('老师告诉你', max_length=300, default='')
     course_org = models.ForeignKey(CourseOrg, on_delete=models.CASCADE,
                                    verbose_name='所属机构', null=True, blank=True)
     category = models.CharField("课程类别", max_length=100, default="")
@@ -34,6 +39,10 @@ class Course(models.Model):
     def get_learn_uesrs(self):
         # 获取这门课程的学习用户
         return self.usercourse_set.all()[:5]
+
+    def get_course_lesson(self):
+        # 获取课程的章节
+        return self.lesson_set.all()
 
     def __str__(self):
         return self.name
@@ -55,6 +64,8 @@ class Video(models.Model):
     lesson = models.ForeignKey(Lesson, verbose_name="章节",on_delete=models.CASCADE)
     name = models.CharField("视频名",max_length=100)
     add_time = models.DateTimeField("添加时间", default=datetime.now)
+    url = models.CharField('访问地址', default='', max_length=200)
+    learn_times = models.IntegerField("学习时长(分钟数)", default=0)
 
     class Meta:
         verbose_name = "视频"

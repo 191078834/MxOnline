@@ -38,4 +38,5 @@ urlpatterns = [
     # path('org_list/', OrgView.as_view(), name='org_list')
     path('org/', include('organization.urls', namespace="org")),
     path("course/", include('course.urls', namespace="course")),
+    path("users/", include('users.urls', namespace="users"))
 ]
