@@ -1,19 +1,20 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*- 
-#Auther: WQM
-#Time: 2019/6/3 17:24
+# organization/forms.py
+
+import re
 from django import forms
 from operation.models import UserAsk
-import re
+
 
 class UserAskForm(forms.ModelForm):
-    '''我要咨询'''
+
     class Meta:
         model = UserAsk
         fields = ['name', 'mobile', 'course_name']
 
     def clean_mobile(self):
-        '''手机验证'''
+        """
+        验证手机号码是否合法
+        """
         mobile = self.cleaned_data['mobile']
         REGEX_MOBILE = "^1[358]\d{9}$|^147\d{8}$|176\d{8}$"
         p = re.compile(REGEX_MOBILE)
